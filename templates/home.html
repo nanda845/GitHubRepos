@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Serch repository</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+        <form action="/getRepos" method="POST" >
+            <div class=" col-md-12">
+            <h2>Search Repositories</h2>
+            Username:<input type="text" name="username" id="username"><input type="submit" value="Search">
+                <p class="err">{{error}}</p>
+            </div>
+        </form>
+        </div>
+        <div class="col-md-12">
+            <h3>Result</h3>
+                <table>
+                    <tr>
+                      <th>Username</th>
+                      <th>Repository name</th>
+                      <th>Repository url</th>
+                      <th>Languages</th>
+                    </tr>
+                    {% for r in results %}
+                    <tr>
+                      <td> {{ r.name }}</td>
+                      <td> {{ r.repository_name}}</td>
+                        <td><a href={{ r.repository_url }}> {{ r.repository_url }}</a></td>
+                      <td> {{ r.languages }}</td>
+                    </tr>
+                    {% endfor %}
+                    </table>
+        </div>
+    </div>
+    </div>
+    <style type="text/css">
+        table{
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table,th,td{
+            border:1px solid black;
+        }
+        .err{
+        color:red;
+        }
+    </style>
+</body>
+</html>
