@@ -22,7 +22,7 @@ repo_zip_url = "https://github.com/"
 def checkUsername(request):
     username=request.data['username']
     print("before'''''''''''''''''''")
-    un=usernames.objects.filter(username=username)
+    un=usernames.objects.filter(username=username).values()
     print(un)
     if not un:
         url = check_username_url + request.data['username']
@@ -50,7 +50,21 @@ def checkUsername(request):
             data1 = RepoDetails.objects.filter(usernames=user_name).values()
             return render(request, 'home.html', {'results': data1})
     else:
-        # return Response("username already exist in database")
+        repos = getRepos(username)
+        for i in repos:
+            if RepoDetails.objects.filter(repository_name=i['name']):
+                print("repo exist----------------------")
+                pass
+            else:
+                store_repo = RepoDetails()
+                store_repo.usernames = un
+                store_repo.name = un.username
+                store_repo.repository_name = i['name']
+                store_repo.repository_url = i['html_url']
+                lan = requests.get(i['languages_url']).json()
+                store_repo.languages = lan
+                store_repo.save()
+                print("saved-------------------")
         data1 = RepoDetails.objects.filter(name=username).values()
         return render(request, 'home.html', {'results': data1})
 
@@ -91,7 +105,7 @@ def updateRepos():
                store_repo.languages = lan
                store_repo.save()
                print("saved-------------------")
-    # return Response("Successfully updated!")
+
 
 
 # def saveRepos(username, repos=None):
