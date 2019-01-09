@@ -106,38 +106,3 @@ def updateRepos():
                store_repo.save()
                print("saved-------------------")
 
-
-
-# def saveRepos(username, repos=None):
-#     if repos:
-#         try:
-#             repo_number = 1
-#             for repo in repos:
-#                 reponame = repo["name"]
-#                 print (str(repo_number) + " " + reponame + " downloading....")
-#                 repozipurl = repo_zip_url + username + "/" + reponame + "/archive/master.zip"
-#                 get_repo_zip = requests.get(repozipurl)
-#                 repozipfile = zipfile.ZipFile(io.BytesIO(get_repo_zip.content))
-#                 print ("\tExtracting " + reponame + "....")
-#                 repozipfile.extractall()
-#                 print ("\t" + reponame + "downloading Complete :)")
-#                 repo_number += 1
-#             return True
-#         except Exception as e:
-#             print (e)
-#             return False
-#     else:
-#         return "Oops! Your don't have any Repository"
-#
-#
-# def main():
-#     username = input("Enter your Github Profile username : ")
-#     if checkUsername(username):
-#         repos = getRepos(username)
-#         status = saveRepos(username=username, repos=repos)
-#         if status:
-#             print ("Done")
-#         else:
-#             print ("Oops ! something went wrong :(")
-#     else:
-#         print ("Username does not exist !")

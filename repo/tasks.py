@@ -1,9 +1,13 @@
+from __future__ import absolute_import, unicode_literals
+from celery import task
+
 import requests
 
 from repo.models import usernames, RepoDetails
 from repo.views import getRepos
 
 
+@task()
 def updateRepos():
     print("initial*************************")
     users=usernames.objects.all()

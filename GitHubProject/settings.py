@@ -39,27 +39,40 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'repo',
-    'djcelery'
+    'repo'
 ]
 
 
-import djcelery
-djcelery.setup_loader()
-BROKER_URL = 'redis://localhost:6379/1'
-CELERY_IMPORTS = ("repo.tasks")
+# import djcelery
+# djcelery.setup_loader()
+# BROKER_URL = 'redis://localhost:6379/1'
+# CELERY_IMPORTS = ("repo.tasks")
+# from celery.schedules import crontab
+#
+# CELERY_TIMEZONE = "Asia/Calcutta"
+#
+# CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+#
+# CELERYBEAT_SCHEDULE = {
+#     # Executes for every 5 minutes on mon,tue,wed,thu,fri,sat
+#     'add-every-day-evening': {
+#         'task': 'repo.tasks.updateRepos',
+#         'schedule': crontab(hour='*', minute='*', day_of_week='mon,tue,wed,thu,fri,sat'),
+#     },
+# }
+
 from celery.schedules import crontab
-
-CELERY_TIMEZONE = "Asia/Calcutta"
-
-CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
-
-CELERYBEAT_SCHEDULE = {
-    # Executes for every 5 minutes on mon,tue,wed,thu,fri,sat
-    'add-every-day-evening': {
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Calcutta'
+CELERY_BEAT_SCHEDULE = {
+'task-number-one': {
         'task': 'repo.tasks.updateRepos',
-        'schedule': crontab(hour='*', minute='*', day_of_week='mon,tue,wed,thu,fri,sat'),
-    },
+        'schedule': crontab('*', '*','*','*','*')
+    }
 }
 
 MIDDLEWARE = [
