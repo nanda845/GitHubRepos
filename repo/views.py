@@ -8,15 +8,11 @@ from django.shortcuts import render
 
 # Create your views here.
 import requests
-import zipfile
-import io
-import sys
 
 from repo.models import usernames, RepoDetails
 
 check_username_url = "https://api.github.com/users/"
 repos_url = "https://api.github.com/users/"
-repo_zip_url = "https://github.com/"
 
 @api_view(['POST'])
 def checkUsername(request):
